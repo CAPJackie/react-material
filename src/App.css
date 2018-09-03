@@ -1,3 +1,13 @@
+.table-div {
+    width: 60%;
+    margin:auto;
+}
+
+.form-div {
+    width: 60%;
+    margin:auto;
+}
+
 .App {
     text-align: center;
 }
@@ -38,12 +48,6 @@
     margin-right: 15px;
 }
 
-.textField{
-    margin-left: theme.spacing.unit,
-    marginRight: theme.spacing.unit,
-    width: 200,
-}
-
 @keyframes App-logo-spin {
     from {
         transform: rotate(0deg);
@@ -52,6 +56,8 @@
         transform: rotate(360deg);
     }
 }
+
+
 
 table {
     font-family: arial, sans-serif;
