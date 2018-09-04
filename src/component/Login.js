@@ -8,10 +8,16 @@ import InputLabel from '@material-ui/core/InputLabel';
 import LockIcon from '@material-ui/icons/LockOutlined';
 import Paper from '@material-ui/core/Paper';
 import Typography from '@material-ui/core/Typography';
-import './Login.css'
+import './Login.css';
 
 
 export class Login extends React.Component{
+
+    constructor(props){
+        super(props);
+    }
+
+    
 
     render(){
         return (
@@ -43,6 +49,7 @@ export class Login extends React.Component{
                                 variant="raised"
                                 color="primary"
                                 className="submit"
+                                onClick={this.props.handleLogin}
                             >
                                 Sign in
                             </Button>
