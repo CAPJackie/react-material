@@ -23,6 +23,10 @@ export class TodoApp extends React.Component {
     render() {
         return (
             <div className="App">
+                <header className="App-header">
+                    <img src={logo} className="App-logo" alt="logo" />
+                    <h1 className="App-title">TODO React App</h1>
+                </header>
 
                 <br />
                 <br />
@@ -74,7 +78,7 @@ export class TodoApp extends React.Component {
                 <div className="table-div">
                     <TodoList todoList={this.state.items} />
                 </div>
-                
+
             </div>
         );
     }

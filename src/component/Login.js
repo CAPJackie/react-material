@@ -11,15 +11,13 @@ import Typography from '@material-ui/core/Typography';
 import './Login.css';
 
 
-export class Login extends React.Component{
+export class Login extends React.Component {
 
-    constructor(props){
-        super(props);
-    }
+    state = { email: "", password: "" };
 
-    
 
-    render(){
+
+    render() {
         return (
             <React.Fragment>
                 <CssBaseline />
@@ -32,7 +30,14 @@ export class Login extends React.Component{
                         <form className="form">
                             <FormControl margin="normal" required fullWidth>
                                 <InputLabel htmlFor="email">Email Address</InputLabel>
-                                <Input id="email" name="email" autoComplete="email" autoFocus />
+                                <Input
+                                    id="email"
+                                    name="email"
+                                    autoComplete="email"
+                                    autoFocus
+                                    onChange = {this.handleEmailChange}
+                                    value = {this.state.email}
+                                />
                             </FormControl>
                             <FormControl margin="normal" required fullWidth>
                                 <InputLabel htmlFor="password">Password</InputLabel>
@@ -41,6 +46,8 @@ export class Login extends React.Component{
                                     type="password"
                                     id="password"
                                     autoComplete="current-password"
+                                    onChange = {this.handlePasswordChange}
+                                    value = {this.state.password}
                                 />
                             </FormControl>
                             <Button
@@ -58,6 +65,18 @@ export class Login extends React.Component{
                 </main>
             </React.Fragment>
         );
+    }
+
+    handleEmailChange = event => {
+        this.setState({
+            email: event.target.value
+        });
+    }
+
+    handlePasswordChange = event => {
+        this.setState({
+            password: event.target.value
+        });
     }
 
 }

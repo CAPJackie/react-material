@@ -8,52 +8,38 @@ import { TodoApp } from './TodoApp';
 
 localStorage.setItem("isLoggedIn", false);
 
-localStorage.setItem("username", "juan.ramirez-me@mail.escuelaing.edu.co");
+localStorage.setItem("email", "juan@cosw.com");
 
-localStorage.setItem("password", "abcd");
+localStorage.setItem("password", "qwerty");
 
-const LoginView = () => (
-    <Login handleLogin = {this.handleSubmit}/>
-);
-
-const TodoView = () => (
-    <TodoApp/>
-);
 
 class App extends Component {
 
+    state = {
+        isLoggedIn: JSON.parse(localStorage.getItem("isLoggedIn"))
+    };
 
-    constructor(props) {
-        super(props);
-        this.state = {
-            isLoggedIn: JSON.parse(localStorage.getItem("isLoggedIn"))
-        };
+    LoginView = () => (
+        <Login handleLogin={this.handleSubmit}/>
+    );
 
-    }
-
+    TodoView = () => (
+        <TodoApp />
+    );
 
     render() {
-        console.log(this.state.isLoggedIn);
+
         if (this.state.isLoggedIn) {
             return (
                 <Router>
-                    <div className="App">
-                        <header className="App-header">
-                            <img src={logo} className="App-logo" alt="logo" />
-                            <h1 className="App-title">TODO React App</h1>
-                        </header>
-
-                        <br />
-                        <br />
-
+                    <div>
                         <div>
-                            <Route exact path="/todo" component={TodoView} />
+                            <Route exact path="/" component={this.TodoView} />
                         </div>
                     </div>
                 </Router>
             );
-        } else if(!this.state.isLoggedIn){
-            
+        } else {
             return (
                 <Router>
                     <div className="App">
@@ -66,21 +52,25 @@ class App extends Component {
                         <br />
 
                         <div>
-                            <Route path="/" component={LoginView} />
+                            <Route exact path="/" component={this.LoginView} />
                         </div>
                     </div>
                 </Router>
             );
         }
 
-        
+
     }
 
-    handleSubmit(e){
-        localStorage.setItem("isLoggedIn", true);
-        this.setState({isLoggedIn: true});
-    }
+    handleSubmit = event => {
+        console.log(this.LoginView.state);
+        if (this.LoginView.state.email === localStorage.getItem("email") &&
+            this.LoginView.state.password === localStorage.getItem("password")) {
+            localStorage.setItem("isLoggedIn", true);
+            this.setState({ isLoggedIn: true });
+        }
 
+    }
 
 
 }
