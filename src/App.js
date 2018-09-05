@@ -16,11 +16,15 @@ localStorage.setItem("password", "qwerty");
 class App extends Component {
 
     state = {
-        isLoggedIn: JSON.parse(localStorage.getItem("isLoggedIn"))
+        isLoggedIn: JSON.parse(localStorage.getItem("isLoggedIn")),
+        email:"",
+        password:""
     };
 
     LoginView = () => (
-        <Login handleLogin={this.handleSubmit}/>
+        <Login handleLogin={this.handleSubmit}
+            handleEmailChange={this.handleEmailChange}
+            handlePasswordChange={this.handlePasswordChange} />
     );
 
     TodoView = () => (
@@ -63,13 +67,24 @@ class App extends Component {
     }
 
     handleSubmit = event => {
-        console.log(this.LoginView.state);
-        if (this.LoginView.state.email === localStorage.getItem("email") &&
-            this.LoginView.state.password === localStorage.getItem("password")) {
+        if (this.state.email === localStorage.getItem("email") &&
+            this.state.password === localStorage.getItem("password")) {
             localStorage.setItem("isLoggedIn", true);
             this.setState({ isLoggedIn: true });
         }
 
+    }
+
+    handleEmailChange = event => {
+        this.setState({
+            email: event.target.value
+        });
+    }
+
+    handlePasswordChange = event => {
+        this.setState({
+            password: event.target.value
+        });
     }
 
 

@@ -13,8 +13,6 @@ import './Login.css';
 
 export class Login extends React.Component {
 
-    state = { email: "", password: "" };
-
 
 
     render() {
@@ -35,8 +33,7 @@ export class Login extends React.Component {
                                     name="email"
                                     autoComplete="email"
                                     autoFocus
-                                    onChange = {this.handleEmailChange}
-                                    value = {this.state.email}
+                                    onChange = {this.props.handleEmailChange}
                                 />
                             </FormControl>
                             <FormControl margin="normal" required fullWidth>
@@ -46,8 +43,7 @@ export class Login extends React.Component {
                                     type="password"
                                     id="password"
                                     autoComplete="current-password"
-                                    onChange = {this.handlePasswordChange}
-                                    value = {this.state.password}
+                                    onChange = {this.props.handlePasswordChange}
                                 />
                             </FormControl>
                             <Button
