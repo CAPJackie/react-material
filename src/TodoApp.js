@@ -8,6 +8,7 @@ import Button from "@material-ui/core/Button";
 import AddIcon from '@material-ui/icons/Add';
 import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
+import {getTodoList, addTodo} from './RestController';
 
 export class TodoApp extends React.Component {
 
@@ -18,6 +19,9 @@ export class TodoApp extends React.Component {
         this.handlePriorityChange = this.handlePriorityChange.bind(this);
         this.handleDateChange = this.handleDateChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.addItem = this.addItem.bind(this);
+        this.assignTodoList = this.assignTodoList.bind(this);
+        
     }
 
     render() {
@@ -115,12 +119,39 @@ export class TodoApp extends React.Component {
             dueDate: this.state.dueDate,
 
         };
-        this.setState(prevState => ({
-            items: prevState.items.concat(newItem),
-            text: '',
-            priority: '',
-            dueDate: ''
-        }));
+
+        this.addItem(newItem);
+
+        
+    }
+
+    addItem(todo){
+        var callback = {
+            onSuccess: function(){
+                this.assignTodoList();
+            },
+            onFailed: function(error){
+                console.log(error);
+            }
+        };
+        addTodo(todo, callback);
+    }
+
+    assignTodoList(){
+        var callback = {
+            onSuccess: function(response){
+                this.setState({
+                    items: response.data,
+                    text: '',
+                    priority: '',
+                    dueDate: ''
+                });
+            },
+            onFailed: function(error){
+                console.log(error);
+            }
+        };
+        getTodoList(callback);
     }
 
 }
