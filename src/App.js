@@ -9,9 +9,9 @@ import axios from 'axios';
 
 localStorage.setItem("isLoggedIn", false);
 
-localStorage.setItem("email", "juan@cosw.com");
+localStorage.setItem("email", "xyz");
 
-localStorage.setItem("password", "qwerty");
+localStorage.setItem("password", "password");
 
 
 class App extends Component {
