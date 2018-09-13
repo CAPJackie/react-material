@@ -3,28 +3,28 @@ import logo from './logo.svg';
 import './App.css';
 import 'react-datepicker/dist/react-datepicker.css';
 import { Login } from "./component/Login";
-import { BrowserRouter as Router, Link, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route } from 'react-router-dom';
 import { TodoApp } from './TodoApp';
 import axios from 'axios';
 
 localStorage.setItem("isLoggedIn", false);
 
-localStorage.setItem("email", "xyz");
+localStorage.setItem("username", "juan.ramirez-me@mail.escuelaing.edu.co");
 
-localStorage.setItem("password", "password");
+localStorage.setItem("password", "qwerty");
 
 
 class App extends Component {
 
     state = {
         isLoggedIn: JSON.parse(localStorage.getItem("isLoggedIn")),
-        email:"",
-        password:""
+        username: "",
+        password: ""
     };
 
     LoginView = () => (
         <Login handleLogin={this.handleSubmit}
-            handleEmailChange={this.handleEmailChange}
+            handleUsernameChange={this.handleUsernameChange}
             handlePasswordChange={this.handlePasswordChange} />
     );
 
@@ -68,29 +68,35 @@ class App extends Component {
     }
 
     handleSubmit = event => {
+        event.preventDefault();
+        let self = this;
         axios.post('http://localhost:8080/user/login', {
-             email: this.state.email,
-             password: this.state.password
-         })
-             .then(function (response) {
-                localStorage.setItem("token", response.data);
-             })
-             .catch(function (error) {
-                 console.log(error);
-             });
-        if (localStorage.getItem("token") && this.state.email === localStorage.getItem("email") &&
+            username: this.state.username,
+            password: this.state.password
+        })
+            .then(function (response) {
+                localStorage.setItem("token", response.data.accessToken);
+                if (localStorage.getItem("token")) {
+                    localStorage.setItem("isLoggedIn", true);
+                    self.setState({ isLoggedIn: true });
+                }
+            })
+            .catch(function (error) {
+                console.log(error);
+            });
+        /*if (localStorage.getItem("token") && this.state.email === localStorage.getItem("email") &&
             this.state.password === localStorage.getItem("password")) {
             localStorage.setItem("isLoggedIn", true);
             this.setState({ isLoggedIn: true });
-        }
+        }*/
 
-        
+
 
     }
 
-    handleEmailChange = event => {
+    handleUsernameChange = event => {
         this.setState({
-            email: event.target.value
+            username: event.target.value
         });
     }
 

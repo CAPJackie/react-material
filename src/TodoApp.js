@@ -1,9 +1,8 @@
-import React, { Component } from 'react';
+import React from 'react';
 import logo from './logo.svg';
 import './App.css';
 import { TodoList } from "./TodoList";
 import 'react-datepicker/dist/react-datepicker.css';
-import { Login } from "./component/Login";
 import Button from "@material-ui/core/Button";
 import AddIcon from '@material-ui/icons/Add';
 import TextField from '@material-ui/core/TextField';
@@ -126,9 +125,10 @@ export class TodoApp extends React.Component {
     }
 
     addItem(todo){
+        let self = this;
         var callback = {
             onSuccess: function(){
-                this.assignTodoList();
+                self.assignTodoList();
             },
             onFailed: function(error){
                 console.log(error);
@@ -138,9 +138,10 @@ export class TodoApp extends React.Component {
     }
 
     assignTodoList(){
+        let self = this;
         var callback = {
             onSuccess: function(response){
-                this.setState({
+                self.setState({
                     items: response.data,
                     text: '',
                     priority: '',

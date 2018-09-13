@@ -27,13 +27,13 @@ export class Login extends React.Component {
                         <Typography variant="headline">Sign in</Typography>
                         <form className="form">
                             <FormControl margin="normal" required fullWidth>
-                                <InputLabel htmlFor="email">Email Address</InputLabel>
+                                <InputLabel htmlFor="username">Username</InputLabel>
                                 <Input
-                                    id="email"
-                                    name="email"
-                                    autoComplete="email"
+                                    id="username"
+                                    name="username"
+                                    autoComplete="username"
                                     autoFocus
-                                    onChange = {this.props.handleEmailChange}
+                                    onChange = {this.props.handleUsernameChange}
                                 />
                             </FormControl>
                             <FormControl margin="normal" required fullWidth>
@@ -54,7 +54,7 @@ export class Login extends React.Component {
                                 className="submit"
                                 onClick={this.props.handleLogin}
                             >
-                                Sign in
+                                Log in
                             </Button>
                         </form>
                     </Paper>
@@ -63,9 +63,9 @@ export class Login extends React.Component {
         );
     }
 
-    handleEmailChange = event => {
+    handleUsernameChange = event => {
         this.setState({
-            email: event.target.value
+            username: event.target.value
         });
     }
 

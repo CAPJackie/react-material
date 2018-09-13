@@ -8,7 +8,7 @@ export function getTodoList(callback) {
         timeout: 1000,
         headers: { 'Authorization': 'Bearer ' + localStorage.getItem("token") }
     });
-    axiosInstance.get('/todos')
+    axiosInstance.get('todos')
         .then(function (response) {
             callback.onSuccess(response);
         })
@@ -23,8 +23,7 @@ export function addTodo(todo, callback) {
         timeout: 1000,
         headers: { 'Authorization': 'Bearer ' + localStorage.getItem("token") }
     });
-    console.log(todo);
-    axiosInstance.post('/todos', todo)
+    axiosInstance.post('todos', todo)
         .then(function () {
             callback.onSuccess();
         })
