@@ -8,18 +8,20 @@ import AddIcon from '@material-ui/icons/Add';
 import TextField from '@material-ui/core/TextField';
 import Paper from '@material-ui/core/Paper';
 import {getTodoList, addTodo} from './RestController';
+import axios from 'axios';
 
 export class TodoApp extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { items: [], text: '', priority: 0, dueDate: "" };
+        this.state = { items: [], text: '', priority: 0, dueDate: "", file:"" };
         this.handleTextChange = this.handleTextChange.bind(this);
         this.handlePriorityChange = this.handlePriorityChange.bind(this);
         this.handleDateChange = this.handleDateChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.addItem = this.addItem.bind(this);
         this.assignTodoList = this.assignTodoList.bind(this);
+        this.handleInputChange = this.handleInputChange.bind(this);
         
     }
 
@@ -63,6 +65,11 @@ export class TodoApp extends React.Component {
                             value={this.state.dueDate}
                             type="date"
                         />
+
+                        <br/>
+                        <br/>
+
+                        <input type="file" id="file" onChange={this.handleInputChange}/>
 
                         <br />
                         <br />
@@ -109,17 +116,32 @@ export class TodoApp extends React.Component {
     handleSubmit(e) {
 
         e.preventDefault();
-        if (!this.state.text.length || !this.state.priority.length || !this.state.dueDate)
-            return;
+        //if (!this.state.text.length || !this.state.priority.length || !this.state.dueDate)
+          //  return;
 
-        const newItem = {
+        let data = new FormData();
+        data.append('file', this.state.file);
+
+
+        var axiosInstance = axios.create({
+            baseURL: 'http://localhost:8080/api/',
+        });
+
+        axiosInstance.post('files', data)
+            .then(function (response) {
+                console.log("file uploaded!", data);
+        })
+        .catch(function (error) {
+            console.log("failed file upload", error);
+        });
+        /*const newItem = {
             text: this.state.text,
             priority: this.state.priority,
             dueDate: this.state.dueDate,
 
         };
 
-        this.addItem(newItem);
+        this.addItem(newItem);*/
 
         
     }
@@ -153,6 +175,12 @@ export class TodoApp extends React.Component {
             }
         };
         getTodoList(callback);
+    }
+
+    handleInputChange(e) {
+        this.setState({
+            file: e.target.files[0]
+        });                
     }
 
 }

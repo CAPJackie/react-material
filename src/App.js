@@ -34,38 +34,19 @@ class App extends Component {
 
     render() {
 
-        if (this.state.isLoggedIn) {
-            return (
-                <Router>
+        return (
+            <Router>
+                <div>
                     <div>
-                        <div>
-                            <Route exact path="/" component={this.TodoView} />
-                        </div>
+                        <Route exact path="/" component={this.TodoView} />
                     </div>
-                </Router>
-            );
-        } else {
-            return (
-                <Router>
-                    <div className="App">
-                        <header className="App-header">
-                            <img src={logo} className="App-logo" alt="logo" />
-                            <h1 className="App-title">TODO React App</h1>
-                        </header>
-
-                        <br />
-                        <br />
-
-                        <div>
-                            <Route exact path="/" component={this.LoginView} />
-                        </div>
-                    </div>
-                </Router>
-            );
-        }
-
-
+                </div>
+            </Router>
+        )
     }
+
+
+
 
     handleSubmit = event => {
         event.preventDefault();
