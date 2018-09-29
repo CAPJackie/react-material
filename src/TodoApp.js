@@ -14,14 +14,14 @@ export class TodoApp extends React.Component {
 
     constructor(props) {
         super(props);
-        this.state = { items: [], text: '', priority: 0, dueDate: "", file:"" };
-        this.handleTextChange = this.handleTextChange.bind(this);
+        this.state = { items: [], description: '', priority: 0, dueDate: "", file:"" };
+        this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
         this.handlePriorityChange = this.handlePriorityChange.bind(this);
         this.handleDateChange = this.handleDateChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.addItem = this.addItem.bind(this);
         this.assignTodoList = this.assignTodoList.bind(this);
-        this.handleInputChange = this.handleInputChange.bind(this);
+        this.handleFileChange = this.handleFileChange.bind(this);
         
     }
 
@@ -41,10 +41,10 @@ export class TodoApp extends React.Component {
                         <h3>New TODO</h3>
 
                         <TextField
-                            id="text"
-                            label="Text"
-                            onChange={this.handleTextChange}
-                            value={this.state.text}
+                            id="description"
+                            label="description"
+                            onChange={this.handleDescriptionChange}
+                            value={this.state.description}
                         />
 
                         <br />
@@ -69,7 +69,7 @@ export class TodoApp extends React.Component {
                         <br/>
                         <br/>
 
-                        <input type="file" id="file" onChange={this.handleInputChange}/>
+                        <input type="file" id="file" onChange={this.handleFileChange}/>
 
                         <br />
                         <br />
@@ -93,10 +93,10 @@ export class TodoApp extends React.Component {
         );
     }
 
-    handleTextChange(e) {
+    handleDescriptionChange(e) {
 
         this.setState({
-            text: e.target.value
+            description: e.target.value
         });
     }
 
@@ -113,11 +113,15 @@ export class TodoApp extends React.Component {
         });
     }
 
+    handleFileChange(e) {
+        this.setState({
+            file: e.target.files[0]
+        });                
+    }
+
     handleSubmit(e) {
 
         e.preventDefault();
-        //if (!this.state.text.length || !this.state.priority.length || !this.state.dueDate)
-          //  return;
 
         let data = new FormData();
         data.append('file', this.state.file);
@@ -127,21 +131,21 @@ export class TodoApp extends React.Component {
             baseURL: 'http://localhost:8080/api/',
         });
 
+        var self = this;
         axiosInstance.post('files', data)
             .then(function (response) {
+                console.log(self.state.file);
+                self.addItem( {
+                    description: self.state.description,
+                    priority: self.state.priority,
+                    dueDate: self.state.dueDate,
+                    file: self.state.file.name
+                } );
                 console.log("file uploaded!", data);
         })
         .catch(function (error) {
             console.log("failed file upload", error);
         });
-        /*const newItem = {
-            text: this.state.text,
-            priority: this.state.priority,
-            dueDate: this.state.dueDate,
-
-        };
-
-        this.addItem(newItem);*/
 
         
     }
@@ -165,9 +169,10 @@ export class TodoApp extends React.Component {
             onSuccess: function(response){
                 self.setState({
                     items: response.data,
-                    text: '',
+                    description: '',
                     priority: '',
-                    dueDate: ''
+                    dueDate: '',
+                    file : ''
                 });
             },
             onFailed: function(error){
@@ -177,10 +182,6 @@ export class TodoApp extends React.Component {
         getTodoList(callback);
     }
 
-    handleInputChange(e) {
-        this.setState({
-            file: e.target.files[0]
-        });                
-    }
+    
 
 }

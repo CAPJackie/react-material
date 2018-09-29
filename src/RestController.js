@@ -5,10 +5,8 @@ import axios from 'axios';
 export function getTodoList(callback) {
     var axiosInstance = axios.create({
         baseURL: 'http://localhost:8080/api/',
-        timeout: 1000,
-        headers: { 'Authorization': 'Bearer ' + localStorage.getItem("token") }
     });
-    axiosInstance.get('todos')
+    axiosInstance.get('todo')
         .then(function (response) {
             callback.onSuccess(response);
         })
@@ -19,11 +17,9 @@ export function getTodoList(callback) {
 
 export function addTodo(todo, callback) {
     var axiosInstance = axios.create({
-        baseURL: 'http://localhost:8080/api/',
-        timeout: 1000,
-        headers: { 'Authorization': 'Bearer ' + localStorage.getItem("token") }
+        baseURL: 'http://localhost:8080/api/'
     });
-    axiosInstance.post('todos', todo)
+    axiosInstance.post('todo', todo)
         .then(function () {
             callback.onSuccess();
         })
